@@ -2,11 +2,10 @@ bootstrap-zxcvbn
 ================
 
 A simple javascript-based password security suite.
+--------------------------------------------------
 
-Current Version: 0.1
-
-Creator: [@quaunaut](http://www.twitter.com/quaunaut)
-
+Current Version: 0.1 |
+Creator: [@quaunaut](http://www.twitter.com/quaunaut) |
 Requires: [Twitter Bootstrap](https://github.com/twitter/bootstrap/), [zxcvbn](https://github.com/lowe/zxcvbn)
 
 What's in:
