@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>bootstrap3-zxcvbn</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <!-- Font Awesome -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container" style="margin-top:50px;">
+
+      <div class="row">
+        <div class="col-lg-6 col-offset-3">
+
+          <form>
+            <fieldset>
+              <legend>Sample Password Input and Strength Meter:</legend>
+              <input type="password" class="form-control input-large" id="password" placeholder="Password" required autofocus>
+
+              <br>
+              <p>Progress Bar based on Score</p>
+              <div class="progress">
+                <div class="progress-bar" id="progress1" style="width: 0%;"></div>
+              </div>
+
+              <br>
+              <p>Progress Bar based on Entropy</p>
+              <div class="progress">
+                <div class="progress-bar" id="progress2" style="width: 0%;"></div>
+              </div>
+
+            </fieldset>
+          </form>
+        </div> <!-- column -->
+      </div> <!-- row -->
+      <div class="row" style="margin-top:25px;">
+        <div class="col-lg-6 col-offset-3">
+        <h3>ZXCVBN Output:</h3>
+        <div class="well">
+          <p>Score: <span id="score"></span></p>
+          <p>Entropy: <span id="entropy"></span></p>
+          <p>Crack_time: <span id="crack_time"></span></p>
+          <p>Crack_time_display: <span id="crack_time_display"></span></p>
+          <p>Score100: <span id="score100"></span></p>
+        </div>
+      </div>
+      <div class="row" style="margin-top:50px;">
+        <div class="col-lg-6 col-offset-3">
+        <h3>Sources:</h3>
+        <h4><a href="http://tech.dropbox.com/?p=165">introduction</a></h4>
+        <h4><a href="https://github.com/lowe/zxcvbn">zxcvbn on github</a></h4>
+      </div>
+    </div> <!-- container -->
+
+    <!-- jQuery2 -->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+
+    <!-- Bootstrap3 JavaScript plugins-->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Load async zxcvbn -->
+    <script type="text/javascript" src="js/zxcvbn-async.js"></script>
+
+    <!-- Calculate zxcvbn results and update progress bar -->
+    <script type="text/javascript">
+    $('#password').keyup(function(event){
+      var password = $('#password').val();
+      var result = zxcvbn(password);
+      score100 = (result.score * 25);
+      $('#score').html(result.score);
+      $('#entropy').html(result.entropy);
+      $('#crack_time').html(result.crack_time);
+      $('#crack_time_display').html(result.crack_time_display);
+      $('#score100').html(score100);
+      $('#progress1').css('width', score100+'%');
+      $('#progress2').css('width', result.entropy+'%');
+      $('#progressbar1').html(score100+'%');
+      });
+    </script>
+
+  </body>
+</html>
+
+
+

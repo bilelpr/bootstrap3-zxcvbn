@@ -1,4 +1,4 @@
-bootstrap-zxcvbn
+bootstrap3-zxcvbn
 ================
 
 A simple javascript-based password security suite.
