@@ -1,23 +1,17 @@
 bootstrap3-zxcvbn
 ================
 
-A simple javascript-based password security suite.
+Intelligent paswword strength signals using zxcvbn and bootstrap3
 --------------------------------------------------
 
 Current Version: 0.1 |
-Creator: [@quaunaut](http://www.twitter.com/quaunaut) |
+Creator: [@johnbeil](http://www.twitter.com/johnbeil) |
 Requires: [Twitter Bootstrap](https://github.com/twitter/bootstrap/), [zxcvbn](https://github.com/lowe/zxcvbn)
 
 What's in:
-* Basic Twitter Bootstrap setup
-* Incredibly simplistic requirements(just strength via zxcvbn)
+* A suit of bootstrap3 password strength indicators.
 
 Todo:
-* Automatic requirements/suggestions generation
-* Password matching field detection
-* Better submit disabling information
-* Prettier
-* Other stuff people like you suggest. Feel free to @reply ideas at me on Twitter.
-
-
-Thanks to Kevin, [Kenneth](http://www.twitter.com/kennethlove), and especially [Paul](http://www.twitter.com/kfdm).
+* Stylize the progress meter
+* Include simple strengh indication using validation
+* More options
