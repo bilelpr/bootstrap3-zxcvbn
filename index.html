@@ -14,7 +14,7 @@
     <div class="container" style="margin-top:50px;">
 
       <div class="row">
-        <div class="col-lg-6 col-offset-3">
+        <div class="col-lg-6">
 
           <form>
             <fieldset>
@@ -22,38 +22,46 @@
               <input type="password" class="form-control input-large" id="password" placeholder="Password" required autofocus>
 
               <br>
-              <p>Progress Bar based on Score</p>
+              <p>Label based on Score (0-4):</p>
+              <span class="label" id="label-span"></span>
+
+              <br>
+              <br>
+              <p>Progress Bar based on Score (0-4):</p>
               <div class="progress">
                 <div class="progress-bar" id="progress1" style="width: 0%;"></div>
               </div>
 
-              <br>
-              <p>Progress Bar based on Entropy</p>
+
+              <p>Progress Bar based on Entropy (0- 100):</p>
               <div class="progress">
-                <div class="progress-bar" id="progress2" style="width: 0%;"></div>
+                <div class="progress-bar progress-bar-danger" id="progress2" style="width: 0%;"></div>
               </div>
 
             </fieldset>
           </form>
         </div> <!-- column -->
-      </div> <!-- row -->
-      <div class="row" style="margin-top:25px;">
-        <div class="col-lg-6 col-offset-3">
-        <h3>ZXCVBN Output:</h3>
-        <div class="well">
-          <p>Score: <span id="score"></span></p>
-          <p>Entropy: <span id="entropy"></span></p>
-          <p>Crack_time: <span id="crack_time"></span></p>
-          <p>Crack_time_display: <span id="crack_time_display"></span></p>
-          <p>Score100: <span id="score100"></span></p>
-        </div>
-      </div>
-      <div class="row" style="margin-top:50px;">
-        <div class="col-lg-6 col-offset-3">
-        <h3>Sources:</h3>
-        <h4><a href="http://tech.dropbox.com/?p=165">introduction</a></h4>
-        <h4><a href="https://github.com/lowe/zxcvbn">zxcvbn on github</a></h4>
-      </div>
+
+
+        <div class="col-lg-5 col-offset-1">
+          <legend>Password Strength Analysis:</legend>
+          <div class="well">
+            <p>Score: <span id="score"></span></p>
+            <p>Entropy: <span id="entropy"></span></p>
+            <p>Characters: <span id="characters"></span></p>
+            <p>Crack_time: <span id="crack_time"></span></p>
+            <p>Crack_time_display: <span id="crack_time_display"></span></p>
+            <p>Score100: <span id="score100"></span></p>
+          </div>
+
+          <br>
+
+          <h4>Sources:</h4>
+          <h4><a href="http://tech.dropbox.com/?p=165">[1] dropbox blog post about zxcvbn</a></h4>
+          <h4><a href="https://github.com/lowe/zxcvbn">[2] zxcvbn on github</a></h4>
+          <h4><a href="https://github.com/johnbeil/bootstrap3-zxcvbn">[3] bootstrap3zxcvbn on github</a></h4>
+        </div><!-- column -->
+      </div><!-- row -->
     </div> <!-- container -->
 
     <!-- jQuery2 -->
@@ -67,19 +75,34 @@
 
     <!-- Calculate zxcvbn results and update progress bar -->
     <script type="text/javascript">
-    $('#password').keyup(function(event){
-      var password = $('#password').val();
-      var result = zxcvbn(password);
-      score100 = (result.score * 25);
-      $('#score').html(result.score);
-      $('#entropy').html(result.entropy);
-      $('#crack_time').html(result.crack_time);
-      $('#crack_time_display').html(result.crack_time_display);
-      $('#score100').html(score100);
-      $('#progress1').css('width', score100+'%');
-      $('#progress2').css('width', result.entropy+'%');
-      $('#progressbar1').html(score100+'%');
+    $(document).ready(function(){
+      $('#password').keyup(function(event){
+        var password = $('#password').val();
+        var result = zxcvbn(password);
+        score100 = (result.score * 25);
+        $('#score').html(result.score);
+        $('#entropy').html(result.entropy);
+        $('#characters').html(password.length);
+        $('#crack_time').html(result.crack_time);
+        $('#crack_time_display').html(result.crack_time_display);
+        $('#score100').html(score100);
+
+        // label based on score (0,1=weak; 2=ok; 3 =good; 4=great)
+        if (password.length === 0) {
+          $('#label-span').hide();
+        } else {$('#label-span').show();}
+        $('#label-span').html(result.score <= 1 ? "weak" : result.score === 2 ? "fair" : result.score === 3 ? "good" : "great");
+        $('#label-span').removeClass("label-danger label-warning label-success").addClass(result.score < 3 ? "label-danger" : result.score === 3 ? "label-warning" : "label-success");
+
+        // progress bar based on score
+        $('#progress1').css('width', score100+'%');
+        $('#progress1').removeClass("progress-bar-danger progress-bar-warning progress-bar-success").addClass(result.score < 3 ? "progress-bar-danger" : result.score === 3 ? "progress-bar-warning" : "progress-bar-success");
+
+        // progress bar based on entropy (tops out at 100)
+        $('#progress2').css('width', result.entropy+'%');
+        $('#progress2').removeClass("progress-bar-danger progress-bar-warning progress-bar-success").addClass(result.entropy < 33 ? "progress-bar-danger" : result.entropy < 66 ? "progress-bar-warning" : "progress-bar-success");
       });
+    });
     </script>
 
   </body>
